@@ -90,7 +90,10 @@ namespace Beans.Unity.Tweening
 			CircularInOut,
 			SinusIn,
 			SinusOut,
-			SinusInOut
+			SinusInOut,
+			ExponentialIn,
+			ExponentialOut,
+			ExponentialInOut
 		}
 
 		public static EaseMethod GetEaseMethod (EaseType ease)
@@ -147,6 +150,12 @@ namespace Beans.Unity.Tweening
 					return SinusOut;
 				case EaseType.SinusInOut:
 					return SinusInOut;
+				case EaseType.ExponentialIn:
+					return ExponentialIn;
+				case EaseType.ExponentialOut:
+					return ExponentialOut;
+				case EaseType.ExponentialInOut:
+					return ExponentialInOut;
 			}
 		}
 
@@ -175,5 +184,8 @@ namespace Beans.Unity.Tweening
 		public static float SinusIn (float t) => -Mathf.Cos (t * (Mathf.PI * 0.5f)) + 1f;
 		public static float SinusOut (float t) => Mathf.Sin (t * (Mathf.PI * 0.5f));
 		public static float SinusInOut (float t) => -0.5f * (Mathf.Cos (Mathf.PI * t) - 1f);
+		public static float ExponentialIn (float t) => Mathf.Pow (2f, 10f * (t - 1f));
+		public static float ExponentialOut (float t) => Mathf.Sin (t * (Mathf.PI * 0.5f));
+		public static float ExponentialInOut (float t) => -0.5f * (Mathf.Cos (Mathf.PI * t) - 1f);
 	}
 }
