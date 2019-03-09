@@ -3,14 +3,15 @@ using UnityEngine;
 
 namespace Beans.Unity.Tweening
 {
-	public class Coroutweener : MonoBehaviour { }
 
 	public static class Coroutween
 	{
+
 		public delegate void ProgressChanged<T> (T from, T to, float t) where T : struct;
 		public delegate T Getter<out T> ();
 		public delegate void Setter<in T> (T value);
 
+		private class Coroutweener : MonoBehaviour { }
 		private static Coroutweener tweener;
 		private static Coroutweener Tweener
 		{
