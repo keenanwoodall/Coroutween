@@ -39,7 +39,7 @@ public AnimationCurve positionCurve = new AnimationCurve ();
 private void Update ()
 {
     if (Input.GetKeyDown (KeyCode.Space))
-        Coroutween.To (transform.position, transform.position + Vector3.up, duration, positionCurve.Evaluate, x => transform.position = x);
+        transform.PositionTo (transform.position + Vector3.up, duration, positionCurve.Evaluate);
 }
 ```
 ![2](https://i.imgur.com/fkako6q.gif)
