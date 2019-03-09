@@ -40,7 +40,6 @@ namespace Beans.Unity.Tweening
 	public static class Coroutween
 	{
 		public delegate void ProgressChanged (float t);
-		public delegate void ProgressChanged<T> (T a, T b, float t);
 		public delegate T Getter<out T> ();
 		public delegate void Setter<in T> (T value);
 
@@ -160,11 +159,6 @@ namespace Beans.Unity.Tweening
 		private static IEnumerator InterpolateRoutine (float duration, EaseMethod ease, ProgressChanged onProgress)
 		{
 			return ToRoutine (duration, t => onProgress (ease (t)));
-		}
-
-		private static IEnumerator InterpolateRoutine<T> (T from, T to, float duration, EaseMethod ease, ProgressChanged<T> onProgress)
-		{
-			return ToRoutine (duration, t => onProgress (from, to, ease (t)));
 		}
 	}
 
