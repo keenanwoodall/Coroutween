@@ -10,7 +10,7 @@ In the following examples I'll show how to change the position of a transform wi
 1. The easiest way lets you determine a getter and setter for supported types and takes care of everything else.
 
 ```cs
-Coroutween.To (() => transform.position, x => transform.position = x, target.position, duration, Ease.EaseType.CubicInOut);
+Coroutween.To (() => transform.position, x => transform.position = x, target.position, duration, EaseType.CubicInOut);
 ```
 
 2. The next way lets you tween any value type as long as you know how to linearly interpolate it.
@@ -21,7 +21,7 @@ Coroutween.To
   transform.position, 
   target.position, 
   duration, 
-  Ease.EaseType.CubicInOut, 
+  EaseType.CubicInOut, 
   (a, b, t) => transform.position = Vector3.LerpUnclamped (a, b, t)
 );
 ```
@@ -30,5 +30,5 @@ Coroutween.To
 ```cs
 var from = transform.position;
 var to = target.position;
-Coroutween.To (duration, Ease.EaseType.CubicInOut, t => transform.position = Vector3.LerpUnclamped (from, to, t));
+Coroutween.To (duration, EaseType.CubicInOut, t => transform.position = Vector3.LerpUnclamped (from, to, t));
 ```
