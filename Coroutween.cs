@@ -26,7 +26,8 @@ namespace Beans.Unity.Tweening
 		ElasticInOut,
 		CircularIn,
 		CircularOut,
-		CircularInOut
+		CircularInOut,
+		SinusIn
 	}
 
 	public class Coroutweener : MonoBehaviour { }
@@ -34,6 +35,7 @@ namespace Beans.Unity.Tweening
 	public static class Coroutween
 	{
 		public delegate void ProgressChanged<T> (T from, T to, float t) where T : struct;
+		public delegate float EaseMethod (float t);
 
 		private static Coroutweener tweener;
 		private static Coroutweener Tweener
@@ -46,13 +48,17 @@ namespace Beans.Unity.Tweening
 			}
 		}
 
-		public static Coroutine To<T> (T from, T to, float duration, ProgressChanged<T> onProgressChanged, EaseType ease) where T : struct
-		{
-			return Tweener.StartCoroutine (ToRoutine (from, to, duration, onProgressChanged, ease));
-		}
 		public static Coroutine To<T> (T from, T to, float duration, ProgressChanged<T> onProgressChanged) where T : struct
 		{
-			return Tweener.StartCoroutine (ToRoutine (from, to, duration, onProgressChanged, EaseType.CubicInOut));
+			return To (from, to, duration, onProgressChanged, EaseType.CubicInOut);
+		}
+		public static Coroutine To<T> (T from, T to, float duration, ProgressChanged<T> onProgressChanged, EaseType ease) where T : struct
+		{
+			return To (from, to, duration, onProgressChanged, GetEaseMethod (ease));
+		}
+		public static Coroutine To<T> (T from, T to, float duration, ProgressChanged<T> onProgressChanged, EaseMethod ease) where T : struct
+		{
+			return Tweener.StartCoroutine (ToRoutine (from, to, duration, onProgressChanged, ease));
 		}
 
 		private static IEnumerator ToRoutine<T> (T from, T to, float duration, ProgressChanged<T> onProgressChanged) where T : struct
@@ -76,13 +82,11 @@ namespace Beans.Unity.Tweening
 			yield break;
 		}
 
-		private static IEnumerator ToRoutine<T> (T from, T to, float duration, ProgressChanged<T> onProgressChanged, EaseType ease) where T : struct
+		private static IEnumerator ToRoutine<T> (T from, T to, float duration, ProgressChanged<T> onProgressChanged, EaseMethod ease) where T : struct
 		{
-			var easeMethod = GetEaseMethod (ease);
-			return ToRoutine (from, to, duration, (a, b, t) => onProgressChanged (a, b, easeMethod (t)));
+			return ToRoutine (from, to, duration, (a, b, t) => onProgressChanged (a, b, ease (t)));
 		}
 
-		private delegate float EaseMethod (float t);
 		private static EaseMethod GetEaseMethod (EaseType ease)
 		{
 			switch (ease)
