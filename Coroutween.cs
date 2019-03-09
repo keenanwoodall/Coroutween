@@ -8,6 +8,8 @@ namespace Beans.Unity.Tweening
 	public static class Coroutween
 	{
 		public delegate void ProgressChanged<T> (T from, T to, float t) where T : struct;
+		public delegate T Getter<out T> ();
+		public delegate void Setter<in T> (T value);
 
 		private static Coroutweener tweener;
 		private static Coroutweener Tweener
@@ -20,24 +22,24 @@ namespace Beans.Unity.Tweening
 			}
 		}
 
-		public static Coroutine To<T> (T from, T to, float duration, ProgressChanged<T> onProgressChanged) where T : struct
+		public static Coroutine To<T> (T from, T to, float duration, ProgressChanged<T> onProgress) where T : struct
 		{
-			return To (from, to, duration, onProgressChanged, Ease.EaseType.CubicInOut);
+			return To (from, to, duration, onProgress, Ease.EaseType.CubicInOut);
 		}
-		public static Coroutine To<T> (T from, T to, float duration, ProgressChanged<T> onProgressChanged, Ease.EaseType ease) where T : struct
+		public static Coroutine To<T> (T from, T to, float duration, ProgressChanged<T> onProgress, Ease.EaseType ease) where T : struct
 		{
-			return To (from, to, duration, onProgressChanged, Ease.GetEaseMethod (ease));
+			return To (from, to, duration, onProgress, Ease.GetEaseMethod (ease));
 		}
-		public static Coroutine To<T> (T from, T to, float duration, ProgressChanged<T> onProgressChanged, Ease.EaseMethod ease) where T : struct
+		public static Coroutine To<T> (T from, T to, float duration, ProgressChanged<T> onProgress, Ease.EaseMethod ease) where T : struct
 		{
-			return Tweener.StartCoroutine (ToRoutine (from, to, duration, onProgressChanged, ease));
+			return Tweener.StartCoroutine (ToRoutine (from, to, duration, onProgress, ease));
 		}
 
-		private static IEnumerator ToRoutine<T> (T from, T to, float duration, ProgressChanged<T> onProgressChanged) where T : struct
+		private static IEnumerator ToRoutine<T> (T from, T to, float duration, ProgressChanged<T> onProgress) where T : struct
 		{
 			if (duration == 0f)
 			{
-				onProgressChanged (from, to, 1f);
+				onProgress (from, to, 1f);
 				yield break;
 			}
 
@@ -45,18 +47,18 @@ namespace Beans.Unity.Tweening
 
 			while (time < duration)
 			{
-				onProgressChanged (from, to, time / duration);
+				onProgress (from, to, time / duration);
 				time += Time.deltaTime;
 				yield return null;
 			}
 
-			onProgressChanged (from, to, 1f);
+			onProgress (from, to, 1f);
 			yield break;
 		}
 
-		private static IEnumerator ToRoutine<T> (T from, T to, float duration, ProgressChanged<T> onProgressChanged, Ease.EaseMethod ease) where T : struct
+		private static IEnumerator ToRoutine<T> (T from, T to, float duration, ProgressChanged<T> onProgress, Ease.EaseMethod ease) where T : struct
 		{
-			return ToRoutine (from, to, duration, (a, b, t) => onProgressChanged (a, b, ease (t)));
+			return ToRoutine (from, to, duration, (a, b, t) => onProgress (a, b, ease (t)));
 		}
 	}
 
