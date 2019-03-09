@@ -18,11 +18,10 @@ Coroutween.To (() => transform.position, x => transform.position = x, target.pos
 ```cs
 Coroutween.To 
 (
-	transform.position, 
-	target.position, 
-	duration, 
-	EaseType.CubicInOut, 
-	(a, b, t) => transform.position = Vector3.LerpUnclamped (a, b, t)
+   transform.position, 
+   target.position, 
+   EaseType.CubicInOut, 
+   (a, b, t) => transform.position = Vector3.LerpUnclamped (a, b, t)
 );
 ```
 
@@ -40,11 +39,12 @@ private float someFloat;
 
 private void Start ()
 {
-	Coroutween.To (() => someFloat, x => someFloat = x, 100f, 5f, CustomCubicEasing);
+    // Moves someFloat from 0 to 100 over 5 seconds along a cubic curve
+    Coroutween.To (() => someFloat, x => someFloat = x, 100f, 5f, CustomCubicEasing);
 }
 
 private float CustomCubicEasing (float t)
 {
-	return t * t * t;
+    return t * t * t;
 }
 ```
