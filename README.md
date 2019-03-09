@@ -25,3 +25,20 @@ Coroutween.CreateInterpolater (duration, EaseType.ElasticOut, t => Camera.main.f
 All of these examples produce the same result:
 
 ![1](https://i.imgur.com/Gca8XFf.gif)
+
+---
+
+Every tween method that has an `EaseType` will also have an overload with an `EaseMethod` which is a callback that lets you calculate your own easing. If, for example, you wanted to use an animation curve instead of a preset easing type, you could pass `curve.Evaluate` instead of some `EaseType`.
+
+Here's small example of how you could use it:
+```cs
+public float duration = 1f;
+public AnimationCurve positionCurve = new AnimationCurve ();
+
+private void Update ()
+{
+    if (Input.GetKeyDown (KeyCode.Space))
+        Coroutween.To (transform.position, transform.position + Vector3.up, duration, positionCurve.Evaluate, x => transform.position = x);
+}
+```
+![2](https://i.imgur.com/fkako6q.gif)
