@@ -9,7 +9,7 @@ In the following examples I'll show how to change the FOV of a camera with each 
 
 1. The easiest way is to use premade tweens like this:
 ```cs
-Camera.main.FieldOfViewTo (to: 25f, duration, EaseType.ElasticOut);
+camera.FieldOfViewTo (to: 25f, duration, EaseType.ElasticOut);
 ```
 2. The next way lets you tween any supported value (`int`, `float`, `Vector2/3/4`, `Quaternion`, `Color`)
 ```cs
@@ -17,9 +17,9 @@ Coroutween.To (from: camera.fieldOfView, to: 25f, duration, EaseType.ElasticOut,
 ```
 3. The final way gives you complete control by simply providing a callback with the tween's eased progress.
 ```cs
-var from = Camera.main.fieldOfView;
+var from = camera.fieldOfView;
 var to = 25f;
-Coroutween.CreateInterpolater (duration, EaseType.ElasticOut, t => Camera.main.fieldOfView = Mathf.LerpUnclamped (from, to, t));
+Coroutween.CreateInterpolater (duration, EaseType.ElasticOut, t => camera.fieldOfView = Mathf.LerpUnclamped (from, to, t));
 ```
 
 All of these examples produce the same result:
