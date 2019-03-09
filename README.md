@@ -4,8 +4,8 @@ A 💩 tweening library for Unity - only made for the pun, don't actually use it
 ### How to use it
 Make sure you have `using Beans.Unity.Tweening;` at the top of your script
 
-After that you have a few options for how to tween stuff.
-In the following examples I'll show how to change the position of a transform with each approach.
+After that, you have a few options for how to tween stuff.
+In the following examples I'll show how to change the FOV of a camera with each approach.
 
 1. The easiest way is to use premade tweens like this:
 ```cs
