@@ -31,7 +31,7 @@ var from = transform.position;
 var to = target.position;
 Coroutween.To (duration, EaseType.CubicInOut, t => transform.position = Vector3.LerpUnclamped (from, to, t));
 ```
-
+---
 Each variation is also overloaded with a version that lets you supply a custom easing function.
 If, for example, you wanted to use an animation curve you could do something like this:
 ```cs
