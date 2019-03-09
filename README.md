@@ -33,18 +33,13 @@ Coroutween.To (duration, EaseType.CubicInOut, t => transform.position = Vector3.
 ```
 
 Each variation is also overloaded with a version that lets you supply a custom easing function.
-If, for example, you wanted to make your own cubic-in easing you could do something like this:
+If, for example, you wanted to use an animation curve you could do something like this:
 ```cs
-private float someFloat;
+public AnimationCurve curve = AnimationCurve.EaseInOut (0f, 0f, 1f, 1f);
 
 private void Start ()
 {
-    // Moves someFloat from 0 to 100 over 5 seconds along a cubic curve
-    Coroutween.To (() => someFloat, x => someFloat = x, 100f, 5f, CustomCubicEasing);
-}
-
-private float CustomCubicEasing (float t)
-{
-    return t * t * t;
+    // Increases object's scale to twice it's size along an animation curve.
+    Coroutween.To (() => transform.localScale, x => transform.localScale = x, Vector3.one * 2f, 5f, curve.Evaluate);
 }
 ```
