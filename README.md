@@ -18,11 +18,11 @@ Coroutween.To (() => transform.position, x => transform.position = x, target.pos
 ```cs
 Coroutween.To 
 (
-  transform.position, 
-  target.position, 
-  duration, 
-  EaseType.CubicInOut, 
-  (a, b, t) => transform.position = Vector3.LerpUnclamped (a, b, t)
+	transform.position, 
+	target.position, 
+	duration, 
+	EaseType.CubicInOut, 
+	(a, b, t) => transform.position = Vector3.LerpUnclamped (a, b, t)
 );
 ```
 
