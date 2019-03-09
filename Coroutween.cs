@@ -5,7 +5,8 @@ namespace Beans.Unity.Tweening
 {
 	public static class Coroutween
 	{
-		public delegate void ProgressChanged<T> (T from, T to, float t) where T : struct;
+		public delegate void ProgressChanged (float t);
+		public delegate void ProgressChanged<T> (T a, T b, float t);
 		public delegate T Getter<out T> ();
 		public delegate void Setter<in T> (T value);
 
@@ -21,53 +22,89 @@ namespace Beans.Unity.Tweening
 			}
 		}
 
-		/// <summary>
-		/// Generic tweening method that requires you apply the interpolation yourself.
-		/// </summary>
-		/// <typeparam name="T">The type of value to tween.</typeparam>
-		/// <param name="from">The start value.</param>
-		/// <param name="to">The target value.</param>
-		/// <param name="duration">How long the tween will take.</param>
-		/// <param name="onProgress">(from, to, t) The callback for when the tween progresses. This is where you interpolate between from and to based on t.</param>
-		/// <returns>The coroutine that runs the tween.</returns>
-		public static Coroutine To<T> (T from, T to, float duration, ProgressChanged<T> onProgress) where T : struct
+		public static Coroutine To (float duration, Ease.EaseType ease, ProgressChanged onProgress)
 		{
-			return To (from, to, duration, onProgress, Ease.EaseType.CubicInOut);
+			return To (duration, Ease.GetEaseMethod (ease), onProgress);
 		}
-		/// <summary>
-		/// Generic tweening method that requires you apply the interpolation yourself.
-		/// </summary>
-		/// <typeparam name="T">The type of value to tween.</typeparam>
-		/// <param name="from">The start value.</param>
-		/// <param name="to">The target value.</param>
-		/// <param name="duration">How long the tween will take.</param>
-		/// <param name="onProgress">(from, to, t) The callback for when the tween progresses. This is where you interpolate between from and to based on t.</param>
-		/// <param name="ease">The type of easing preset to apply.</param>
-		/// <returns>The coroutine that runs the tween.</returns>
-		public static Coroutine To<T> (T from, T to, float duration, ProgressChanged<T> onProgress, Ease.EaseType ease) where T : struct
+		public static Coroutine To (float duration, Ease.EaseMethod ease, ProgressChanged onProgress)
 		{
-			return To (from, to, duration, onProgress, Ease.GetEaseMethod (ease));
-		}
-		/// <summary>
-		/// Generic tweening method that requires you apply the interpolation yourself.
-		/// </summary>
-		/// <typeparam name="T">The type of value to tween.</typeparam>
-		/// <param name="from">The start value.</param>
-		/// <param name="to">The target value.</param>
-		/// <param name="duration">How long the tween will take.</param>
-		/// <param name="onProgress">(from, to, t) The callback for when the tween progresses. This is where you interpolate between from and to based on t.</param>
-		/// <param name="ease">The custom function in which to calculate easing. You can still use preset eases by passing Ease.EaseMethodNameHere as the methods used by the presets are public.</param>
-		/// <returns>The coroutine that runs the tween.</returns>
-		public static Coroutine To<T> (T from, T to, float duration, ProgressChanged<T> onProgress, Ease.EaseMethod ease) where T : struct
-		{
-			return Tweener.StartCoroutine (ToRoutine (from, to, duration, onProgress, ease));
+			return Tweener.StartCoroutine (ToRoutine (duration, ease, onProgress));
 		}
 
-		private static IEnumerator ToRoutine<T> (T from, T to, float duration, ProgressChanged<T> onProgress) where T : struct
+		public static Coroutine To<T> (T from, T to, float duration, Ease.EaseType ease, ProgressChanged<T> onProgress) where T : struct
+		{
+			return To (from, to, duration, Ease.GetEaseMethod (ease), onProgress);
+		}
+		public static Coroutine To<T> (T from, T to, float duration, Ease.EaseMethod ease, ProgressChanged<T> onProgress) where T : struct
+		{
+			return Tweener.StartCoroutine (ToRoutine (from, to, duration, ease, onProgress));
+		}
+
+		// float
+		public static Coroutine To (Getter<float> getter, Setter<float> setter, float target, float duration, Ease.EaseType ease)
+		{
+			var from = getter ();
+			return To (duration, ease, t => setter (Mathf.LerpUnclamped (from, target, t)));
+		}
+		public static Coroutine To (Getter<float> getter, Setter<float> setter, float target, float duration, Ease.EaseMethod ease)
+		{
+			var from = getter ();
+			return To (duration, ease, t => setter (Mathf.LerpUnclamped (from, target, t)));
+		}
+
+		// Vector2
+		public static Coroutine To (Getter<Vector2> getter, Setter<Vector2> setter, Vector2 target, float duration, Ease.EaseType ease)
+		{
+			var from = getter ();
+			return To (duration, ease, t => setter (Vector2.LerpUnclamped (from, target, t)));
+		}
+		public static Coroutine To (Getter<Vector2> getter, Setter<Vector2> setter, Vector2 target, float duration, Ease.EaseMethod ease)
+		{
+			var from = getter ();
+			return To (duration, ease, t => setter (Vector2.LerpUnclamped (from, target, t)));
+		}
+
+		// Vector3
+		public static Coroutine To (Getter<Vector3> getter, Setter<Vector3> setter, Vector3 target, float duration, Ease.EaseType ease)
+		{
+			var from = getter ();
+			return To (duration, ease, t => setter (Vector3.LerpUnclamped (from, target, t)));
+		}
+		public static Coroutine To (Getter<Vector3> getter, Setter<Vector3> setter, Vector3 target, float duration, Ease.EaseMethod ease)
+		{
+			var from = getter ();
+			return To (duration, ease, t => setter (Vector3.LerpUnclamped (from, target, t)));
+		}
+
+		// Vector4
+		public static Coroutine To (Getter<Vector4> getter, Setter<Vector4> setter, Vector4 target, float duration, Ease.EaseType ease)
+		{
+			var from = getter ();
+			return To (duration, ease, t => setter (Vector4.LerpUnclamped (from, target, t)));
+		}
+		public static Coroutine To (Getter<Vector4> getter, Setter<Vector4> setter, Vector4 target, float duration, Ease.EaseMethod ease)
+		{
+			var from = getter ();
+			return To (duration, ease, t => setter (Vector4.LerpUnclamped (from, target, t)));
+		}
+
+		// Quaternion
+		public static Coroutine To (Getter<Quaternion> getter, Setter<Quaternion> setter, Quaternion target, float duration, Ease.EaseType ease)
+		{
+			var from = getter ();
+			return To (duration, ease, t => setter (Quaternion.SlerpUnclamped (from, target, t)));
+		}
+		public static Coroutine To (Getter<Quaternion> getter, Setter<Quaternion> setter, Quaternion target, float duration, Ease.EaseMethod ease)
+		{
+			var from = getter ();
+			return To (duration, ease, t => setter (Quaternion.SlerpUnclamped (from, target, t)));
+		}
+
+		private static IEnumerator ToRoutine (float duration, ProgressChanged onProgress)
 		{
 			if (duration == 0f)
 			{
-				onProgress (from, to, 1f);
+				onProgress (1f);
 				yield break;
 			}
 
@@ -75,19 +112,24 @@ namespace Beans.Unity.Tweening
 
 			while (time < duration)
 			{
-				onProgress (from, to, time / duration);
+				onProgress (time / duration);
 				time += Time.deltaTime;
 				yield return null;
 			}
 
-			onProgress (from, to, 1f);
+			onProgress (1f);
 
 			yield break;
 		}
 
-		private static IEnumerator ToRoutine<T> (T from, T to, float duration, ProgressChanged<T> onProgress, Ease.EaseMethod ease) where T : struct
+		private static IEnumerator ToRoutine (float duration, Ease.EaseMethod ease, ProgressChanged onProgress)
 		{
-			return ToRoutine (from, to, duration, (a, b, t) => onProgress (a, b, ease (t)));
+			return ToRoutine (duration, t => onProgress (ease (t)));
+		}
+
+		private static IEnumerator ToRoutine<T> (T from, T to, float duration, Ease.EaseMethod ease, ProgressChanged<T> onProgress)
+		{
+			return ToRoutine (duration, t => onProgress (from, to, ease (t)));
 		}
 	}
 
