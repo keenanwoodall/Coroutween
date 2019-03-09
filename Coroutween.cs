@@ -17,7 +17,7 @@ namespace Beans.Unity.Tweening
 			get
 			{
 				if (tweener == null)
-					tweener = new GameObject ("Tweener (Don't Delete)").AddComponent<Coroutweener> ();
+					tweener = new GameObject ("Coroutweener").AddComponent<Coroutweener> ();
 				return tweener;
 			}
 		}
