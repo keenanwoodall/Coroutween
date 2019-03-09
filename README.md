@@ -28,6 +28,7 @@ All of these examples produce the same result:
 
 ---
 
+### Custom Easing
 Every tween method that has an `EaseType` will also have an overload with an `EaseMethod` which is a callback that lets you calculate your own easing. If, for example, you wanted to use an animation curve instead of a preset easing type, you could pass `curve.Evaluate` instead of some `EaseType`.
 
 Here's small example of how you could use it:
@@ -45,6 +46,7 @@ private void Update ()
 
 ---
 
+### Physics?
 If you are a little clever, you could even use tweens with physics
 ```cs
 public Transform target;
