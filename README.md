@@ -32,3 +32,19 @@ var from = transform.position;
 var to = target.position;
 Coroutween.To (duration, EaseType.CubicInOut, t => transform.position = Vector3.LerpUnclamped (from, to, t));
 ```
+
+Each variation is also overloaded with a version that lets you supply a custom easing function.
+If, for example, you wanted to make your own cubic-in easing you could do something like this:
+```cs
+private float someFloat;
+
+private void Start ()
+{
+	Coroutween.To (() => someFloat, x => someFloat = x, 100f, 5f, CustomCubicEasing);
+}
+
+private float CustomCubicEasing (float t)
+{
+	return t * t * t;
+}
+```
