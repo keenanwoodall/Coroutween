@@ -3,10 +3,8 @@ using UnityEngine;
 
 namespace Beans.Unity.Tweening
 {
-
 	public static class Coroutween
 	{
-
 		public delegate void ProgressChanged<T> (T from, T to, float t) where T : struct;
 		public delegate T Getter<out T> ();
 		public delegate void Setter<in T> (T value);
@@ -59,7 +57,7 @@ namespace Beans.Unity.Tweening
 		/// <param name="duration">How long the tween will take.</param>
 		/// <param name="onProgress">(from, to, t) The callback for when the tween progresses. This is where you interpolate between from and to based on t.</param>
 		/// <param name="ease">The custom function in which to calculate easing. You can still use preset eases by passing Ease.EaseMethodNameHere as the methods used by the presets are public.</param>
-		/// <returns></returns>
+		/// <returns>The coroutine that runs the tween.</returns>
 		public static Coroutine To<T> (T from, T to, float duration, ProgressChanged<T> onProgress, Ease.EaseMethod ease) where T : struct
 		{
 			return Tweener.StartCoroutine (ToRoutine (from, to, duration, onProgress, ease));
@@ -83,6 +81,7 @@ namespace Beans.Unity.Tweening
 			}
 
 			onProgress (from, to, 1f);
+
 			yield break;
 		}
 
