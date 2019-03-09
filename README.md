@@ -42,3 +42,28 @@ private void Update ()
 }
 ```
 ![2](https://i.imgur.com/fkako6q.gif)
+
+---
+
+If you are a little clever, you could even use tweens with physics
+```cs
+public Transform target;
+public float duration = 1f;
+public Rigidbody rb;
+
+private Vector3 targetPosition;
+
+private IEnumerator Start ()
+{
+    while (true)
+    {
+        yield return Coroutween.To (transform.position, target.position, duration, EaseType.ElasticOut, x => targetPosition = x);
+    }
+}
+
+private void FixedUpdate ()
+{
+    rb.MovePosition (targetPosition);
+}
+```
+![3](https://i.imgur.com/m2iwh3I.gif)
