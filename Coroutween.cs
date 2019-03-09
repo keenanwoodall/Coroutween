@@ -6,18 +6,21 @@ namespace Beans.Unity.Tweening
 	public enum EaseType
 	{
 		Linear,
-		InQuad,
-		OutQuad,
-		InOutQuad,
-		InCubic,
-		OutCubic,
-		InOutCubic,
-		InQuart,
-		OutQuart,
-		InOutQuart,
-		InQuint,
-		OutQuint,
-		InOutQuint
+		QuadIn,
+		QuadOut,
+		QuadInOut,
+		CubicIn,
+		CubicOut,
+		CubicInOut,
+		QuartIn,
+		QuartOut,
+		QuartInOut,
+		QuintIn,
+		QuintOut,
+		QuintInOut,
+		BounceIn,
+		BounceOut,
+		BounceInOut
 	}
 
 	public class Coroutweener : MonoBehaviour { }
@@ -43,7 +46,7 @@ namespace Beans.Unity.Tweening
 		}
 		public static Coroutine To<T> (T from, T to, float duration, ProgressChanged<T> onProgressChanged) where T : struct
 		{
-			return Tweener.StartCoroutine (ToRoutine (from, to, duration, onProgressChanged, EaseType.InOutCubic));
+			return Tweener.StartCoroutine (ToRoutine (from, to, duration, onProgressChanged, EaseType.CubicInOut));
 		}
 
 		private static IEnumerator ToRoutine<T> (T from, T to, float duration, ProgressChanged<T> onProgressChanged) where T : struct
@@ -80,44 +83,54 @@ namespace Beans.Unity.Tweening
 			{
 				default:
 					return Linear;
-				case EaseType.InQuad:
-					return InQuad;
-				case EaseType.OutQuad:
-					return OutQuad;
-				case EaseType.InOutQuad:
-					return InOutQuad;
-				case EaseType.InCubic:
-					return InCubic;
-				case EaseType.OutCubic:
-					return OutCubic;
-				case EaseType.InOutCubic:
-					return InOutCubic;
-				case EaseType.InQuart:
-					return InQuart;
-				case EaseType.OutQuart:
-					return OutQuart;
-				case EaseType.InOutQuart:
-					return InOutQuart;
-				case EaseType.InQuint:
-					return InQuint;
-				case EaseType.OutQuint:
-					return OutQuint;
-				case EaseType.InOutQuint:
-					return InOutQuint;
+				case EaseType.QuadIn:
+					return QuadIn;
+				case EaseType.QuadOut:
+					return QuadOut;
+				case EaseType.QuadInOut:
+					return QuadInOut;
+				case EaseType.CubicIn:
+					return CubicIn;
+				case EaseType.CubicOut:
+					return CubicOut;
+				case EaseType.CubicInOut:
+					return CubicInOut;
+				case EaseType.QuartIn:
+					return QuartIn;
+				case EaseType.QuartOut:
+					return QuartOut;
+				case EaseType.QuartInOut:
+					return QuartInOut;
+				case EaseType.QuintIn:
+					return QuintIn;
+				case EaseType.QuintOut:
+					return QuintOut;
+				case EaseType.QuintInOut:
+					return QuintInOut;
+				case EaseType.BounceIn:
+					return BounceIn;
+				case EaseType.BounceOut:
+					return BounceOut;
+				case EaseType.BounceInOut:
+					return BounceInOut;
 			}
 		}
+
 		private static float Linear (float t) => t;
-		private static float InQuad (float t) => t * t;
-		private static float OutQuad (float t) => t * (2f - t);
-		private static float InOutQuad (float t) => t < 0.5f ? 2f * t * t : -1f + (4f - 2f * t) * t;
-		private static float InCubic (float t) => t * t * t;
-		private static float OutCubic (float t) => (t - 1f) * t * t + 1f;
-		private static float InOutCubic (float t) => t < 0.5f ? 4f * t * t * t : (t - 1f) * (2f * t - 2f) * (2 * t - 2) + 1f;
-		private static float InQuart (float t) => t * t * t * t;
-		private static float OutQuart (float t) => 1f - (t - 1f) * t * t * t;
-		private static float InOutQuart (float t) => t < 0.5f ? 8f * t * t * t * t : 1f - 8f *(t - 1f) * t * t * t;
-		private static float InQuint (float t) => t * t * t * t * t;
-		private static float OutQuint (float t) => 1f + (t - 1f) * t * t * t * t;
-		private static float InOutQuint (float t) => t < 0.5f ? 16f * t * t * t * t * t : 1f + 16f * (t - 1f) * t * t * t * t;
+		private static float QuadIn (float t) => t * t;
+		private static float QuadOut (float t) => t * (2f - t);
+		private static float QuadInOut (float t) => t < 0.5f ? 2f * t * t : -1f + (4f - 2f * t) * t;
+		private static float CubicIn (float t) => t * t * t;
+		private static float CubicOut (float t) => (t - 1f) * t * t + 1f;
+		private static float CubicInOut (float t) => t < 0.5f ? 4f * t * t * t : (t - 1f) * (2f * t - 2f) * (2 * t - 2) + 1f;
+		private static float QuartIn (float t) => t * t * t * t;
+		private static float QuartOut (float t) => 1f - (t - 1f) * t * t * t;
+		private static float QuartInOut (float t) => t < 0.5f ? 8f * t * t * t * t : 1f - 8f *(t - 1f) * t * t * t;
+		private static float QuintIn (float t) => t * t * t * t * t;
+		private static float QuintOut (float t) => 1f + (t - 1f) * t * t * t * t;
+		private static float QuintInOut (float t) => t < 0.5f ? 16f * t * t * t * t * t : 1f + 16f * (t - 1f) * t * t * t * t;
+		private static float BounceIn (float t) => 1f - BounceOut (1f - t);
+		private static float BounceOut (float t) => t < 0.363636374f ? 7.5625f * t * t : t < 0.727272749f ? 7.5625f * (t -= 0.545454562f) * t + 0.75f : t < 0.909090936f ? 7.5625f * (t -= 0.8181818f) * t + 0.9375f : 7.5625f * (t -= 21f / 22f) * t + 63f / 64f;
+		private static float BounceInOut (float t) => t < 0.5f ? BounceIn (t * 2f) * 0.5f : BounceOut (t * 2f - 1f) * 0.5f + 0.5f;
 	}
 }
