@@ -1,5 +1,5 @@
 # Coroutween
-A 💩 tweening library for Unity - only made for the pun, not to actually be used.
+A 💩 tweening library for Unity - only made for the pun, don't actually use it.
 
 ### How to use it
 Make sure you have `using Beans.Unity.Tweening;` at the top of your script
