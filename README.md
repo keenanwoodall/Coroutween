@@ -1,5 +1,5 @@
 # Coroutween
-A shitty tweening library for Unity
+A shitty tweening library for Unity only made for the pun, not to actually be used.
 
 ### Getting Started
 Make sure you have `using Beans.Unity.Tweening;` at the top of your script
