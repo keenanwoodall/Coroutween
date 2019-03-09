@@ -23,7 +23,10 @@ namespace Beans.Unity.Tweening
 		BounceInOut,
 		ElasticIn,
 		ElasticOut,
-		ElasticInOut
+		ElasticInOut,
+		CircularIn,
+		CircularOut,
+		CircularInOut
 	}
 
 	public class Coroutweener : MonoBehaviour { }
@@ -122,6 +125,12 @@ namespace Beans.Unity.Tweening
 					return ElasticOut;
 				case EaseType.ElasticInOut:
 					return ElasticInOut;
+				case EaseType.CircularIn:
+					return CircularIn;
+				case EaseType.CircularOut:
+					return CircularOut;
+				case EaseType.CircularInOut:
+					return CircularInOut;
 			}
 		}
 
@@ -144,5 +153,8 @@ namespace Beans.Unity.Tweening
 		private static float ElasticIn (float t) => -(Mathf.Pow (2, 10 * (t -= 1)) * Mathf.Sin ((t - (0.3f / 4f)) * (2 * Mathf.PI) / 0.3f));
 		private static float ElasticOut (float t) => 1f - ElasticIn (1f - t);
 		private static float ElasticInOut (float t) => (t *= 2f) == 2f ? 1f : t < 1f ? -0.5f * (Mathf.Pow (2f, 10f * (t -= 1)) * Mathf.Sin ((t - 0.1125f) * (2f * Mathf.PI) / 0.45f)) : (Mathf.Pow (2f, -10f * (t -= 1f)) * Mathf.Sin ((t - 0.1125f) * (2f * Mathf.PI) / 0.45f) * 0.5f + 1f);
+		private static float CircularIn (float t) => -(Mathf.Sqrt (1 - t * t) - 1);
+		private static float CircularOut (float t) => Mathf.Sqrt (1f - (t = t - 1f) * t);
+		private static float CircularInOut (float t) => (t *= 2f) < 1f ? -1f / 2f * (Mathf.Sqrt (1f - t * t) - 1f) : 0.5f * (Mathf.Sqrt (1 - (t -= 2) * t) + 1);
 	}
 }
