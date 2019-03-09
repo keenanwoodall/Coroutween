@@ -24,7 +24,6 @@ namespace Beans.Unity.Tweening
 
 	public static class Coroutween
 	{
-
 		public delegate void ProgressChanged<T> (T from, T to, float t) where T : struct;
 
 		private static Coroutweener tweener;
@@ -38,9 +37,13 @@ namespace Beans.Unity.Tweening
 			}
 		}
 
-		public static Coroutine To<T> (T from, T to, float duration, ProgressChanged<T> onProgressChanged, EaseType ease = EaseType.InOutCubic) where T : struct
+		public static Coroutine To<T> (T from, T to, float duration, ProgressChanged<T> onProgressChanged, EaseType ease) where T : struct
 		{
 			return Tweener.StartCoroutine (ToRoutine (from, to, duration, onProgressChanged, ease));
+		}
+		public static Coroutine To<T> (T from, T to, float duration, ProgressChanged<T> onProgressChanged) where T : struct
+		{
+			return Tweener.StartCoroutine (ToRoutine (from, to, duration, onProgressChanged, EaseType.InOutCubic));
 		}
 
 		private static IEnumerator ToRoutine<T> (T from, T to, float duration, ProgressChanged<T> onProgressChanged) where T : struct
