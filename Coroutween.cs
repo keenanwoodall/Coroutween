@@ -56,82 +56,83 @@ namespace Beans.Unity.Tweening
 			}
 		}
 
-		public static Coroutine To (float duration, EaseType ease, ProgressChanged onProgress)
+		public static Coroutine CreateInterpolater (float duration, EaseType ease, ProgressChanged onProgress)
 		{
-			return To (duration, Ease.GetEaseMethod (ease), onProgress);
+			return CreateInterpolater (duration, Ease.GetEaseMethod (ease), onProgress);
 		}
-		public static Coroutine To (float duration, EaseMethod ease, ProgressChanged onProgress)
+		public static Coroutine CreateInterpolater (float duration, EaseMethod ease, ProgressChanged onProgress)
 		{
-			return Tweener.StartCoroutine (ToRoutine (duration, ease, onProgress));
+			return Tweener.StartCoroutine (InterpolateRoutine (duration, ease, onProgress));
 		}
 
-		public static Coroutine To<T> (T from, T to, float duration, EaseType ease, ProgressChanged<T> onProgress) where T : struct
+		// int
+		public static Coroutine To (int from, int to, float duration, EaseType ease, Setter<int> setter)
 		{
-			return To (from, to, duration, Ease.GetEaseMethod (ease), onProgress);
+			return CreateInterpolater (duration, ease, t => setter ((int)(t * Mathf.Abs (to - from) + from)));
 		}
-		public static Coroutine To<T> (T from, T to, float duration, EaseMethod ease, ProgressChanged<T> onProgress) where T : struct
+		public static Coroutine To (int from, int to, float duration, EaseMethod ease, Setter<int> setter)
 		{
-			return Tweener.StartCoroutine (ToRoutine (from, to, duration, ease, onProgress));
+			return CreateInterpolater (duration, ease, t => setter ((int)(t * Mathf.Abs (to - from) + from)));
 		}
 
 		// float
-		public static Coroutine To (Getter<float> getter, Setter<float> setter, float target, float duration, EaseType ease)
+		public static Coroutine To (float from, float to, float duration, EaseType ease, Setter<float> setter)
 		{
-			var from = getter ();
-			return To (duration, ease, t => setter (Mathf.LerpUnclamped (from, target, t)));
+			return CreateInterpolater (duration, ease, t => setter (Mathf.LerpUnclamped (from, to, t)));
 		}
-		public static Coroutine To (Getter<float> getter, Setter<float> setter, float target, float duration, EaseMethod ease)
+		public static Coroutine To (float from, float to, float duration, EaseMethod ease, Setter<float> setter)
 		{
-			var from = getter ();
-			return To (duration, ease, t => setter (Mathf.LerpUnclamped (from, target, t)));
+			return CreateInterpolater (duration, ease, t => setter (Mathf.LerpUnclamped (from, to, t)));
 		}
 
 		// Vector2
-		public static Coroutine To (Getter<Vector2> getter, Setter<Vector2> setter, Vector2 target, float duration, EaseType ease)
+		public static Coroutine To (Vector2 from, Vector2 to, float duration, EaseType ease, Setter<Vector2> setter)
 		{
-			var from = getter ();
-			return To (duration, ease, t => setter (Vector2.LerpUnclamped (from, target, t)));
+			return CreateInterpolater (duration, ease, t => setter (Vector2.LerpUnclamped (from, to, t)));
 		}
-		public static Coroutine To (Getter<Vector2> getter, Setter<Vector2> setter, Vector2 target, float duration, EaseMethod ease)
+		public static Coroutine To (Vector2 from, Vector2 to, float duration, EaseMethod ease, Setter<Vector2> setter)
 		{
-			var from = getter ();
-			return To (duration, ease, t => setter (Vector2.LerpUnclamped (from, target, t)));
+			return CreateInterpolater (duration, ease, t => setter (Vector2.LerpUnclamped (from, to, t)));
 		}
 
 		// Vector3
-		public static Coroutine To (Getter<Vector3> getter, Setter<Vector3> setter, Vector3 target, float duration, EaseType ease)
+		public static Coroutine To (Vector3 from, Vector3 to, float duration, EaseType ease, Setter<Vector3> setter)
 		{
-			var from = getter ();
-			return To (duration, ease, t => setter (Vector3.LerpUnclamped (from, target, t)));
+			return CreateInterpolater (duration, ease, t => setter (Vector3.LerpUnclamped (from, to, t)));
 		}
-		public static Coroutine To (Getter<Vector3> getter, Setter<Vector3> setter, Vector3 target, float duration, EaseMethod ease)
+		public static Coroutine To (Vector3 from, Vector3 to, float duration, EaseMethod ease, Setter<Vector3> setter)
 		{
-			var from = getter ();
-			return To (duration, ease, t => setter (Vector3.LerpUnclamped (from, target, t)));
+			return CreateInterpolater (duration, ease, t => setter (Vector3.LerpUnclamped (from, to, t)));
 		}
 
 		// Vector4
-		public static Coroutine To (Getter<Vector4> getter, Setter<Vector4> setter, Vector4 target, float duration, EaseType ease)
+		public static Coroutine To (Vector4 from, Vector4 to, float duration, EaseType ease, Setter<Vector4> setter)
 		{
-			var from = getter ();
-			return To (duration, ease, t => setter (Vector4.LerpUnclamped (from, target, t)));
+			return CreateInterpolater (duration, ease, t => setter (Vector4.LerpUnclamped (from, to, t)));
 		}
-		public static Coroutine To (Getter<Vector4> getter, Setter<Vector4> setter, Vector4 target, float duration, EaseMethod ease)
+		public static Coroutine To (Vector4 from, Vector4 to, float duration, EaseMethod ease, Setter<Vector4> setter)
 		{
-			var from = getter ();
-			return To (duration, ease, t => setter (Vector4.LerpUnclamped (from, target, t)));
+			return CreateInterpolater (duration, ease, t => setter (Vector4.LerpUnclamped (from, to, t)));
 		}
 
 		// Quaternion
-		public static Coroutine To (Getter<Quaternion> getter, Setter<Quaternion> setter, Quaternion target, float duration, EaseType ease)
+		public static Coroutine To (Quaternion from, Quaternion to, float duration, EaseType ease, Setter<Quaternion> setter)
 		{
-			var from = getter ();
-			return To (duration, ease, t => setter (Quaternion.SlerpUnclamped (from, target, t)));
+			return CreateInterpolater (duration, ease, t => setter (Quaternion.SlerpUnclamped (from, to, t)));
 		}
-		public static Coroutine To (Getter<Quaternion> getter, Setter<Quaternion> setter, Quaternion target, float duration, EaseMethod ease)
+		public static Coroutine To (Quaternion from, Quaternion to, float duration, EaseMethod ease, Setter<Quaternion> setter)
 		{
-			var from = getter ();
-			return To (duration, ease, t => setter (Quaternion.SlerpUnclamped (from, target, t)));
+			return CreateInterpolater (duration, ease, t => setter (Quaternion.SlerpUnclamped (from, to, t)));
+		}
+
+		// Color
+		public static Coroutine To (Color from, Color to, float duration, EaseType ease, Setter<Color> setter)
+		{
+			return CreateInterpolater (duration, ease, t => setter (Color.LerpUnclamped (from, to, t)));
+		}
+		public static Coroutine To (Color from, Color to, float duration, EaseMethod ease, Setter<Color> setter)
+		{
+			return CreateInterpolater (duration, ease, t => setter (Color.LerpUnclamped (from, to, t)));
 		}
 
 		private static IEnumerator ToRoutine (float duration, ProgressChanged onProgress)
@@ -156,12 +157,12 @@ namespace Beans.Unity.Tweening
 			yield break;
 		}
 
-		private static IEnumerator ToRoutine (float duration, EaseMethod ease, ProgressChanged onProgress)
+		private static IEnumerator InterpolateRoutine (float duration, EaseMethod ease, ProgressChanged onProgress)
 		{
 			return ToRoutine (duration, t => onProgress (ease (t)));
 		}
 
-		private static IEnumerator ToRoutine<T> (T from, T to, float duration, EaseMethod ease, ProgressChanged<T> onProgress)
+		private static IEnumerator InterpolateRoutine<T> (T from, T to, float duration, EaseMethod ease, ProgressChanged<T> onProgress)
 		{
 			return ToRoutine (duration, t => onProgress (from, to, ease (t)));
 		}
