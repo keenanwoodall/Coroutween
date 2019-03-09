@@ -22,5 +22,6 @@ var to = 25f;
 Coroutween.CreateInterpolater (duration, EaseType.ElasticOut, t => Camera.main.fieldOfView = Mathf.LerpUnclamped (from, to, t));
 ```
 
-All of these examples produce the same result
+All of these examples produce the same result:
+
 ![1](https://i.imgur.com/Gca8XFf.gif)
