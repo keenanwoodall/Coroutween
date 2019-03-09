@@ -7,39 +7,20 @@ Make sure you have `using Beans.Unity.Tweening;` at the top of your script
 After that you have a few options for how to tween stuff.
 In the following examples I'll show how to change the position of a transform with each approach.
 
-1. The easiest way lets you determine a getter and setter for supported types and takes care of everything else.
-
+1. The easiest way is to use premade tweens like this:
 ```cs
-Coroutween.To (() => transform.position, x => transform.position = x, target.position, duration, EaseType.CubicInOut);
+Camera.main.FieldOfViewTo (to: 25f, duration, EaseType.ElasticOut);
+```
+2. The next way lets you tween any supported value (`int`, `float`, `Vector2/3/4`, `Quaternion`, `Color`)
+```cs
+Coroutween.To (from: camera.fieldOfView, to: 25f, duration, EaseType.ElasticOut, x => camera.fieldOfView = x);
+```
+3. The final way gives you complete control by simply providing a callback with the tween's eased progress.
+```cs
+var from = Camera.main.fieldOfView;
+var to = 25f;
+Coroutween.CreateInterpolater (duration, EaseType.ElasticOut, t => Camera.main.fieldOfView = Mathf.LerpUnclamped (from, to, t));
 ```
 
-2. The next way lets you tween any value type as long as you know how to linearly interpolate it.
-
-```cs
-Coroutween.To 
-(
-   transform.position, 
-   target.position, 
-   EaseType.CubicInOut, 
-   (a, b, t) => transform.position = Vector3.LerpUnclamped (a, b, t)
-);
-```
-
-3. The final way gives you complete control over interpolation but you have to keep track of the start and end values on your own.
-```cs
-var from = transform.position;
-var to = target.position;
-Coroutween.To (duration, EaseType.CubicInOut, t => transform.position = Vector3.LerpUnclamped (from, to, t));
-```
----
-Each variation is also overloaded with a version that lets you supply a custom easing function.
-If, for example, you wanted to use an animation curve you could do something like this:
-```cs
-public AnimationCurve curve = AnimationCurve.EaseInOut (0f, 0f, 1f, 1f);
-
-private void Start ()
-{
-    // Increases object's scale to twice it's size along an animation curve.
-    Coroutween.To (() => transform.localScale, x => transform.localScale = x, Vector3.one * 2f, 5f, curve.Evaluate);
-}
-```
+All of these examples produce the same result
+![1](https://i.imgur.com/Gca8XFf.gif)
