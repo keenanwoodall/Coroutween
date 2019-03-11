@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Beans.Unity.Tweening
+namespace Coroutween
 {
 	public delegate float EaseMethod (float t);
 

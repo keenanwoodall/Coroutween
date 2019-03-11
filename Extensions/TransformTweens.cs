@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Beans.Unity.Tweening
+namespace Coroutween
 {
 	public static class TransformTweens
 	{

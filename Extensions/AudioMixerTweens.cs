@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Audio;
 
-namespace Beans.Unity.Tweening
+namespace Coroutween
 {
 	public static class AudioMixerTweens
 	{
